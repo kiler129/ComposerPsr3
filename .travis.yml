@@ -16,9 +16,6 @@ matrix:
     - os: linux
       php: 'nightly'
 
-    - os: linux
-      php: 'hhvm'
-
     - os: osx
       osx_image: xcode7.3
       language: generic

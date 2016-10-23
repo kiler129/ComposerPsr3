@@ -1,5 +1,10 @@
 <?php
-
+/*
+ * This file is part of noFlash ComposerPsr3 package.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace noFlash\ComposerPsr3;
 
@@ -8,22 +13,65 @@ use Psr\Log\AbstractLogger;
 use Psr\Log\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 
+/**
+ * Main Logger class
+ *
+ * @package noFlash\ComposerPsr3
+ * @author  Grzegorz Zdanowski <grzegorz@noflash.pl>
+ */
 class Logger extends AbstractLogger implements LoggerInterface
 {
+    /**
+     * @var string Log emergency level
+     */
     const LEVEL_EMERGENCY = 'EMERG';
-    const LEVEL_ALERT     = 'ALERT';
-    const LEVEL_CRITICAL  = 'CRITICAL';
-    const LEVEL_ERROR     = 'ERROR';
-    const LEVEL_WARNING   = 'WARN';
-    const LEVEL_NOTICE    = 'NOTICE';
-    const LEVEL_INFO      = 'INFO';
-    const LEVEL_DEBUG     = 'DEBUG';
 
+    /**
+     * @var string Log alert level
+     */
+    const LEVEL_ALERT = 'ALERT';
+
+    /**
+     * @var string Log critical level
+     */
+    const LEVEL_CRITICAL = 'CRITICAL';
+
+    /**
+     * @var string Log error level
+     */
+    const LEVEL_ERROR = 'ERROR';
+
+    /**
+     * @var string Log warning level
+     */
+    const LEVEL_WARNING = 'WARN';
+
+    /**
+     * @var string Log notice level
+     */
+    const LEVEL_NOTICE = 'NOTICE';
+
+    /**
+     * @var string Log info level
+     */
+    const LEVEL_INFO = 'INFO';
+
+    /**
+     * @var string Log debug level
+     */
+    const LEVEL_DEBUG = 'DEBUG';
+
+    /**
+     * @var string[] Level tags
+     */
     const LEVEL_TAGS = [
         self::LEVEL_ERROR   => 'error',
         self::LEVEL_WARNING => 'warning',
     ];
 
+    /**
+     * @var array Verbosity level mapping
+     */
     private $levelsVerbosity = [
         self::LEVEL_EMERGENCY => IOInterface::NORMAL,
         self::LEVEL_ALERT     => IOInterface::NORMAL,
@@ -36,7 +84,7 @@ class Logger extends AbstractLogger implements LoggerInterface
     ];
 
     /**
-     * @var IOInterface
+     * @var IOInterface Input/Output helper interface
      */
     private $IO;
 
@@ -53,7 +101,7 @@ class Logger extends AbstractLogger implements LoggerInterface
     /**
      * Logger constructor.
      *
-     * @param IOInterface $IO
+     * @param IOInterface $IO Input/Output helper interface
      */
     public function __construct(IOInterface $IO)
     {
@@ -62,7 +110,7 @@ class Logger extends AbstractLogger implements LoggerInterface
 
     /**
      * Handles any custom log level you can imagine, even if it's paranoia level, just
-     * call
+     * call:
      * $shoutInstance->paranoia('Aaaa!!!')
      *
      * @param       $level
@@ -80,7 +128,10 @@ class Logger extends AbstractLogger implements LoggerInterface
 
     /**
      * {@inheritdoc}
+     *
      * @todo Docbug - $context["exception"] aren't detected as Exception instance
+     *
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {
@@ -119,9 +170,11 @@ class Logger extends AbstractLogger implements LoggerInterface
      *  %5$s - exception (formatted by print_r())
      *  %1$d - unix timestamp
      *
-     * @param string $format
-     *
      * @see print_r()
+     *
+     * @param string $format Log line format
+     *
+     * @return void
      */
     public function setLineFormat($format)
     {
@@ -131,9 +184,11 @@ class Logger extends AbstractLogger implements LoggerInterface
     /**
      * Accepts any date() compliant format.
      *
-     * @param $format
-     *
      * @see date()
+     *
+     * @param string $format Datetime format
+     *
+     * @return void
      */
     public function setDatetimeFormat($format)
     {
@@ -141,6 +196,8 @@ class Logger extends AbstractLogger implements LoggerInterface
     }
 
     /**
+     * Get Level Verbosity Map
+     *
      * @return array
      */
     public function getLevelVerbosityMap()
@@ -156,6 +213,8 @@ class Logger extends AbstractLogger implements LoggerInterface
      *
      * @param string  $level
      * @param integer $verbosity
+     *
+     * @return void
      */
     public function setLevelVerbosity($level, $verbosity)
     {

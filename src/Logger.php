@@ -137,7 +137,12 @@ class Logger extends AbstractLogger implements LoggerInterface
     {
         $level = strtoupper($level);
 
-        $contextText = "";
+        $exceptionText = (isset($context['exception']) &&
+                          is_object($context['exception']) &&
+                          $context['exception'] instanceof \Exception) ?
+                            print_r($context['exception'], true) : '';
+
+        $contextText = '';
         if (!empty($context) && is_array($context)) {
             $contextText = print_r($context, true);
         }
@@ -148,6 +153,7 @@ class Logger extends AbstractLogger implements LoggerInterface
             $level, //%2$s - log level
             $message, //%3$s - text
             $contextText, //%4$s - context
+            $exceptionText, //%5$s - exception (if available)
             time() //%1$d - unix timestamp
         );
 
@@ -167,7 +173,7 @@ class Logger extends AbstractLogger implements LoggerInterface
      *  %2$s - log level (uppercased)
      *  %3$s - message text
      *  %4$s - context (formatted by print_r())
-     *  %5$s - exception (formatted by print_r())
+     *  %5$s - exception if available (formatted by print_r())
      *  %1$d - unix timestamp
      *
      * @see print_r()

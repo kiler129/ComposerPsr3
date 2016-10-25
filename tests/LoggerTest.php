@@ -222,6 +222,30 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->subjectUnderTest->log('', '', $testContext);
     }
 
+    public function exceptionsDataProvider()
+    {
+        return [
+            [['exception' => 'I am not an exception'], false],
+            [['exception' => new \stdClass()], false],
+            [['notException' => new \Exception()], false],
+            [['exception' => new \Exception()], true]
+        ];
+    }
+
+    /**
+     * @dataProvider exceptionsDataProvider
+     */
+    public function testLogLineProvidesProperExceptionRepresentation($context, $valid)
+    {
+        $this->IO
+            ->expects($this->once())
+            ->method('write')
+            ->with($valid ? $this->stringStartsWith('Exception Object') : '');
+
+        $this->subjectUnderTest->setLineFormat('%5$s');
+        $this->subjectUnderTest->log('', '', $context);
+    }
+
     /**
      * @dataProvider standardLogLevelsProvider
      */

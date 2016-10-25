@@ -68,6 +68,17 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->subjectUnderTest->log('', '');
     }
 
+    public function testDefaultDateFormatIsProvided()
+    {
+        $this->assertNotFalse(@date($this->subjectUnderTest->getDateTimeFormat()));
+    }
+
+    public function testDateFormatCanBeSet()
+    {
+        $this->subjectUnderTest->setDatetimeFormat('YYYYMMMhhhii');
+        $this->assertSame('YYYYMMMhhhii', $this->subjectUnderTest->getDateTimeFormat());
+    }
+
     public function testLogLineProvidesCorrectDate()
     {
         $this->IO
@@ -80,6 +91,19 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->subjectUnderTest->log('', '');
     }
 
+    public function testDefaultLogLineProvidesCorrectDate()
+    {
+        $expectedDate = date($this->subjectUnderTest->getDateTimeFormat());
+
+        $this->IO
+            ->expects($this->once())
+            ->method('write')
+            ->with($this->stringContains($expectedDate));
+
+        $this->subjectUnderTest->log('', '');
+    }
+
+
     public function testLogLineProvidesLogLevel()
     {
         $this->IO
@@ -90,6 +114,16 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->subjectUnderTest->setLineFormat('%2$s');
         //Standard log level using log() method
         $this->subjectUnderTest->log(Logger::LEVEL_INFO, '');
+    }
+
+    public function testDefaultLogLineProvidesLogLevel()
+    {
+        $this->IO
+            ->expects($this->once())
+            ->method('write')
+            ->with($this->stringContains(Logger::LEVEL_DEBUG));
+
+        $this->subjectUnderTest->log(Logger::LEVEL_DEBUG, '');
     }
 
     public function testLogLineConvertsStandardLevelToUppercase()
@@ -156,6 +190,19 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
             ->with($message);
 
         $this->subjectUnderTest->setLineFormat('%3$s');
+        $this->subjectUnderTest->log('', $message);
+    }
+
+    /**
+     * @dataProvider logMessagesProvider
+     */
+    public function testDefaultLogLineProvidesLogMessage($message)
+    {
+        $this->IO
+            ->expects($this->once())
+            ->method('write')
+            ->with($this->stringContains($message));
+
         $this->subjectUnderTest->log('', $message);
     }
 

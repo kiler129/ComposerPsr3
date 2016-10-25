@@ -91,7 +91,7 @@ class Logger extends AbstractLogger implements LoggerInterface
     /**
      * @var string printf-complaint line format
      */
-    private $lineFormat = '<%1\$s> [%2\$s] %3\$s [%4\$s]';
+    private $lineFormat = '<%1$s> [%2$s] %3$s';
 
     /**
      * @var string date()-complaint format used in log lines
@@ -193,6 +193,18 @@ class Logger extends AbstractLogger implements LoggerInterface
     public function setDatetimeFormat($format)
     {
         $this->datetimeFormat = $format;
+    }
+
+    /**
+     * Provides currently set date() format.
+     *
+     * @see date()
+     *
+     * @return string Datetime format
+     */
+    public function getDateTimeFormat()
+    {
+        return $this->datetimeFormat;
     }
 
     /**

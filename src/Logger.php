@@ -111,7 +111,7 @@ class Logger extends AbstractLogger implements LoggerInterface
     /**
      * Handles any custom log level you can imagine, even if it's paranoia level, just
      * call:
-     * $shoutInstance->paranoia('Aaaa!!!')
+     * $instance->paranoia('Aaaa!!!')
      *
      * @param       $level
      * @param array $arguments

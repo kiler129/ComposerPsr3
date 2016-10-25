@@ -29,13 +29,13 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
 
     public function testImplementsLoggerInterface()
     {
-        $shoutReflection = new \ReflectionClass(Logger::class);
-        $this->assertTrue($shoutReflection->isSubclassOf(LoggerInterface::class));
+        $reflection = new \ReflectionClass(Logger::class);
+        $this->assertTrue($reflection->isSubclassOf(LoggerInterface::class));
     }
     public function testExtendsAbstractLogger()
     {
-        $shoutReflection = new \ReflectionClass(Logger::class);
-        $this->assertTrue($shoutReflection->isSubclassOf(AbstractLogger::class));
+        $reflection = new \ReflectionClass(Logger::class);
+        $this->assertTrue($reflection->isSubclassOf(AbstractLogger::class));
     }
 
     public function standardLogLevelsProvider()

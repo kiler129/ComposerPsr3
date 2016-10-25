@@ -11,11 +11,11 @@ Add package to `require-dev` and use ;-)
 Initialize `Logger` object in your Composer hook and optionally set custom verbosity levels - evetyhing else is automatic.
 
 Available methods:
-  * **emergency/alert/...(message, context)** - Every log level have method named after it. So if you want to log "warning" just use `Shout->warning("Be warned!")`. Second argument can be array with any information possible to represent as string by (formatted by [print_r()](http://php.net/print_r)).
+  * **emergency/alert/...(message, context)** - Every log level have method named after it. So if you want to log "warning" just use `Logger->warning("Be warned!")`. Second argument can be array with any information possible to represent as string by (formatted by [print_r()](http://php.net/print_r)).
   * **log(level, message, context)** - It have the same effect as methods described below, so calling `Logger->log("warning", "Be warned!")` produces the same result as example above.
 
 ### Configuration
-Shout comes preconfigured by default, but allows to configure almost anything. List below specifies configuration methods along with default values (specified in brackets). 
+Logger comes preconfigured by default, but allows to configure almost anything. List below specifies configuration methods along with default values (specified in brackets). 
   * **setLineFormat(\<%1$s\> [%2$s] %3$s [%4$s] [%5$s])** - How line should be formated. You can use 6 modifiers: 
     * %1$s - date
     * %2$s - log level (uppercased)

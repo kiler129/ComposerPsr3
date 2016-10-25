@@ -206,6 +206,38 @@ class LoggerTest extends \PHPUnit_Framework_TestCase
         $this->subjectUnderTest->log('', $message);
     }
 
+    public function contextAwareLogMessagesProvider()
+    {
+        return [
+            ['Simple {foo} test', ['foo' => 'bar'], 'Simple bar test'],
+            [
+                'Two {place} holders with {text}',
+                ['place' => 'beer', 'text' => 'juice'],
+                'Two beer holders with juice'
+            ],
+            ['Two {bars} in {bars}', ['bars' => 'foo'], 'Two foo in foo'],
+            [
+                'Test {with} unknown {placeholder}',
+                ['placeholder' => 'beer'],
+                'Test {with} unknown beer'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider contextAwareLogMessagesProvider
+     */
+    public function testLogLineParsesContext($rawLog, $context, $parsedMessage)
+    {
+        $this->IO
+            ->expects($this->once())
+            ->method('write')
+            ->with($parsedMessage);
+
+        $this->subjectUnderTest->setLineFormat('%3$s');
+        $this->subjectUnderTest->log('', $rawLog, $context);
+    }
+
     public function testLogLineProvidesContextRepresentation()
     {
         $testContext = array(

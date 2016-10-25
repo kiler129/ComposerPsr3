@@ -142,6 +142,16 @@ class Logger extends AbstractLogger implements LoggerInterface
                           $context['exception'] instanceof \Exception) ?
                             print_r($context['exception'], true) : '';
 
+        $replace = array();
+        foreach ($context as $key => $val) {
+            if (!is_array($val) &&
+                (!is_object($val) || method_exists($val, '__toString'))) {
+                $replace['{' . $key . '}'] = $val;
+            }
+
+            $message = strtr($message, $replace);
+        }
+
         $contextText = '';
         if (!empty($context) && is_array($context)) {
             $contextText = print_r($context, true);

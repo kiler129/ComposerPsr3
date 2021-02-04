@@ -1,3 +1,9 @@
+# PROJECT ARCHIVED
+
+While the code will (most likely) still work with Composer v1, this project is not maintained since 2016.
+
+---
+
 # Composer PSR-3 Logger [![Build Status](https://travis-ci.org/kiler129/ComposerPsr3.svg?branch=master)](https://travis-ci.org/kiler129/ComposerPsr3)
 Small, fast and PSR-3 compliant logging library useful with custom Composer scripts.
 
